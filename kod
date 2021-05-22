@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+/*
+* Co co robi:
+* los - losowana przez kompa liczba
+* odp - proba zgadniecia wartosci los przez gracza
+* lnp - ilosc nieudanych prob odgadniecia los przez gracza
+* pkt - liczba zdobytych punktow
+* reset - jesli tak gra sie resetuje / jesli nie gra sie konczy
+* (goto) resetuj - resetuje
+* petla - zapetla kod jesli sie nie uda zgadnac
+* petla2 - zapetla kod jesli sie uda zgadnac
+*/
+
+int main()
+{
+    srand(time(NULL));
+
+    cout << "Witaj w mojej grze - Zgadywanie" << endl;
+    cout << "sprobuj zgadnac liczbe od 1 do 10" << endl;
+    cout << "grasz do zdobycia 5 pkt" << endl;
+    cout << "sprobuj byc jak najbardziej precyzyjny" << endl;
+    cout << "bo twoje wszystkie nieudane proby zostaja zapisane :)" << endl << endl;
+
+    restartuj:
+    int odp, lnp = 0, pkt = 0;
+    string restart;
+    petla2:
+    int los = rand() % 10;
+    los++;
+    petla:
+    cout << "Odgadnij liczbe od 1 do 10: " ;
+    cin >> odp;
+    if (odp == los)
+    {
+        cout << "BRAWO udalo ci sie zgadnac liczbe" << endl;
+        pkt++;
+        cout << "liczba punktow: " << pkt << endl << endl;
+        if (pkt == 5)
+        {
+            cout << "SWIETNIE ukonczyles gre z " << lnp << " nieudanymi trafieniami" << endl;
+            cout << "chcesz zagrac jeszcze raz? tak/nie: ";
+            cin >> restart;
+            if (restart == "tak")
+            {
+                cout << endl;
+                goto restartuj;
+            }
+            else
+                return 0;
+        }
+        goto petla2;
+    }
+    else if (odp > los)
+    {
+        cout << "podpowiedz: ZA DUZO" << endl;
+        lnp++;
+        cout << "liczba wszystkich nieudanych prob: " << lnp << endl << endl;
+    }
+    else if (odp < los)
+    {
+        cout << "podpowiedz: ZA MALO" << endl;
+        lnp++;
+        cout << "liczba nieudanych prob: " << lnp << endl << endl;
+    }
+    goto petla;
+}
